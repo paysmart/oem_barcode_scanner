@@ -1,0 +1,3 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="br.com.paysmart.oem.scanner.oem_barcode_scanner">
+</manifest>

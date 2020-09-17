@@ -5,8 +5,14 @@
 
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
 
-    <application android:hardwareAccelerated="true">
-        <activity android:name=".BarCodeScannerActivity" />
+    <application
+        android:hardwareAccelerated="true"
+        android:theme="@style/Theme.OEMBarCodeTheme">
+        <activity android:name=".BarCodeScannerActivity"
+            android:launchMode="singleTop"
+            />
     </application>
+
+
 
 </manifest>

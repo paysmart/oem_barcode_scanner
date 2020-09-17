@@ -1,8 +1,12 @@
 package br.com.paysmart.oem.scanner.oem_barcode_scanner
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.util.Log
 import androidx.annotation.NonNull
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -36,13 +40,29 @@ class OemBarcodeScannerPlugin
         }
     }
 
+
     private fun scan(call: MethodCall, result: Result) {
+
+        val mEventBus = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                intent?.run {
+                    val barcode = getStringExtra("barCode")
+                    Log.d("____", "Received barcode = $barcode")
+                    result.success(barcode)
+                }
+            }
+        }
+
+        LocalBroadcastManager.getInstance(mContext)
+                .registerReceiver(mEventBus, IntentFilter("barcode-read"))
+
+
         call.argument<String>("color")?.let { color ->
             mContext.startActivity(Intent(mContext, BarCodeScannerActivity::class.java).apply {
                 putExtra("color", color)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             })
-            result.success("It worked!")
+
         }
 
     }
@@ -51,5 +71,4 @@ class OemBarcodeScannerPlugin
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         mChannel.setMethodCallHandler(null)
     }
-
 }

@@ -5,10 +5,12 @@ import kotlinx.android.synthetic.main.activity_bar_code_scanner.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import android.Manifest.permission.CAMERA
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import android.os.Bundle
 import android.util.Log
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.zxing.client.android.BeepManager
 
 
@@ -32,8 +34,11 @@ class BarCodeScannerActivity : AppCompatActivity() {
 
         barcodeSurface.setStatusText("")
         barcodeSurface.decodeContinuous { barcode ->
-            Log.d("________", "Decoder read = ${barcode.text}")
             mBeeper.playBeepSound()
+            LocalBroadcastManager.getInstance(this)
+                    .sendBroadcast(Intent("barcode-read").apply {
+                        putExtra("barCode", barcode.text)
+                    })
         }
 
         /*

@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="br.com.paysmart.oem.scanner.oem_barcode_scanner">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
     <application
         android:hardwareAccelerated="true"
         android:theme="@style/Theme.OEMBarCodeTheme">
@@ -12,9 +16,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="landscape" />
     </application>
-    <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
 
 
 </manifest>

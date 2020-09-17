@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import android.os.Bundle
 import android.util.Log
+import com.google.zxing.client.android.BeepManager
 
 
 class BarCodeScannerActivity : AppCompatActivity() {
@@ -17,6 +18,10 @@ class BarCodeScannerActivity : AppCompatActivity() {
         if (ContextCompat.checkSelfPermission(this, CAMERA) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, arrayOf(CAMERA), 0x0)
         }
+    }
+
+    private val mBeeper by lazy {
+        BeepManager(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,8 +33,8 @@ class BarCodeScannerActivity : AppCompatActivity() {
         barcodeSurface.setStatusText("")
         barcodeSurface.decodeContinuous { barcode ->
             Log.d("________", "Decoder read = ${barcode.text}")
+            mBeeper.playBeepSound()
         }
-
 
         /*
         intent?.getStringExtra("color")?.let { color ->

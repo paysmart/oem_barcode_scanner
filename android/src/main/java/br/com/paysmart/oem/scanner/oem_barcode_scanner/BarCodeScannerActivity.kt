@@ -33,7 +33,7 @@ class BarCodeScannerActivity : AppCompatActivity() {
         askCameraPermission()
 
         barcodeSurface.setStatusText("")
-        barcodeSurface.decodeContinuous { barcode ->
+        barcodeSurface.decodeSingle { barcode ->
             mBeeper.playBeepSound()
             LocalBroadcastManager.getInstance(this)
                     .sendBroadcast(Intent("barcode-read").apply {

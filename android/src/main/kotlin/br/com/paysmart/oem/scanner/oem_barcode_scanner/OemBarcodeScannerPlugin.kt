@@ -60,6 +60,7 @@ class OemBarcodeScannerPlugin
         call.argument<String>("color")?.let { color ->
             mContext.startActivity(Intent(mContext, BarCodeScannerActivity::class.java).apply {
                 putExtra("color", color)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
             })
 
         }

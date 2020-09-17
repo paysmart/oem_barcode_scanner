@@ -18,9 +18,10 @@ class OemBarcodeScannerPlugin
 
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        mChannel = MethodChannel(flutterPluginBinding.getFlutterEngine().dartExecutor, "oem_barcode_scanner")
-        mChannel.setMethodCallHandler(OemBarcodeScannerPlugin())
         mContext = flutterPluginBinding.applicationContext
+        mChannel = MethodChannel(flutterPluginBinding.getFlutterEngine().dartExecutor, "oem_barcode_scanner")
+        mChannel.setMethodCallHandler(this)
+
     }
 
     companion object {

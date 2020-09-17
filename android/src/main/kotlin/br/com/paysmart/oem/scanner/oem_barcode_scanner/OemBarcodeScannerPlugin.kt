@@ -1,31 +1,33 @@
 package br.com.paysmart.oem.scanner.oem_barcode_scanner
 
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.plugin.common.PluginRegistry.Registrar
-import io.flutter.embedding.engine.plugins.FlutterPlugin
-import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugin.common.MethodCall
-import androidx.annotation.NonNull
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import androidx.annotation.NonNull
+import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.plugin.common.MethodCall
+import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugin.common.MethodChannel.MethodCallHandler
+import io.flutter.plugin.common.MethodChannel.Result
+import io.flutter.plugin.common.PluginRegistry.Registrar
 
-class OemBarcodeScannerPlugin(private val mContext: Context)
+class OemBarcodeScannerPlugin
     : FlutterPlugin, MethodCallHandler {
 
-    private lateinit var channel: MethodChannel
+    private lateinit var mContext: Context
+    private lateinit var mChannel: MethodChannel
+
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.getFlutterEngine().dartExecutor, "oem_barcode_scanner")
-        channel.setMethodCallHandler(OemBarcodeScannerPlugin(flutterPluginBinding.applicationContext));
+        mChannel = MethodChannel(flutterPluginBinding.getFlutterEngine().dartExecutor, "oem_barcode_scanner")
+        mChannel.setMethodCallHandler(OemBarcodeScannerPlugin())
+        mContext = flutterPluginBinding.applicationContext
     }
 
     companion object {
         @JvmStatic
         fun registerWith(registrar: Registrar) {
             val channel = MethodChannel(registrar.messenger(), "oem_barcode_scanner")
-            channel.setMethodCallHandler(OemBarcodeScannerPlugin(registrar.activeContext()))
+            channel.setMethodCallHandler(OemBarcodeScannerPlugin())
         }
     }
 
@@ -48,6 +50,7 @@ class OemBarcodeScannerPlugin(private val mContext: Context)
 
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-        channel.setMethodCallHandler(null)
+        mChannel.setMethodCallHandler(null)
     }
+
 }

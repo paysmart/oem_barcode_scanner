@@ -32,7 +32,7 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
     defaultConfig {
-        minSdkVersion 24
+        minSdkVersion 16
     }
     lintOptions {
         disable 'InvalidPackage'
@@ -41,8 +41,9 @@ android {
 
 // zxing stuff
 dependencies {
-    implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation('com.journeyapps:zxing-android-embedded:4.1.0') { transitive = false }
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'com.google.zxing:core:3.3.0'
 }
 
 dependencies {
@@ -51,6 +52,5 @@ dependencies {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:+'
     implementation 'androidx.constraintlayout:constraintlayout:+'
 }

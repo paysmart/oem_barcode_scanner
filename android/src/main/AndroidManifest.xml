@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="br.com.paysmart.oem.scanner.oem_barcode_scanner">
 
-    <application>
-        <activity android:name=".BarCodeScannerActivity"></activity>
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
+    <application android:hardwareAccelerated="true">
+        <activity android:name=".BarCodeScannerActivity" />
     </application>
 
 </manifest>

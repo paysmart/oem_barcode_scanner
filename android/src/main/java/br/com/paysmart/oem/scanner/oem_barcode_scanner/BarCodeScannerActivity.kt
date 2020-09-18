@@ -5,11 +5,12 @@ import android.Manifest.permission.CAMERA
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.drawable.ShapeDrawable
+import android.graphics.PorterDuff
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.zxing.client.android.BeepManager
 import kotlinx.android.synthetic.main.activity_bar_code_scanner.*
@@ -23,10 +24,11 @@ class BarCodeScannerActivity : AppCompatActivity() {
         }
     }
 
-    private fun changeBackgroundColor(bgColor: String) =
-            with(barCodeInputButton.background as ShapeDrawable) {
-                paint.color = Color.parseColor(bgColor)
-            }
+    private fun changeBackgroundColor(bgColor: String) {
+        val bg = ResourcesCompat.getDrawable(resources, R.drawable.btn_background, null)
+        bg?.setColorFilter(Color.parseColor(bgColor), PorterDuff.Mode.SRC_ATOP)
+        barCodeInputButton.background = bg
+    }
 
     private val mBeeper by lazy {
         BeepManager(this)

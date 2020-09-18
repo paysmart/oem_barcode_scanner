@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="gcG-vn-cSF">
-    <device id="retina6_5" orientation="landscape" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="gcG-vn-cSF">
+    <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,6 +19,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f5k-4L-R17">
+                                <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IW9-o8-Z7u">
                                 <rect key="frame" x="0.0" y="277" width="896" height="137"/>
                                 <subviews>
@@ -47,7 +51,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nef-CQ-JcV">
                                         <rect key="frame" x="40" y="35" width="45" height="30"/>
-                                        <state key="normal" title="Button"/>
+                                        <state key="normal" title="&lt;"/>
                                         <connections>
                                             <action selector="backToScreen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t6E-hd-av3"/>
                                         </connections>
@@ -76,21 +80,25 @@
                         <constraints>
                             <constraint firstItem="IW9-o8-Z7u" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="4Jg-Ll-TCP"/>
                             <constraint firstAttribute="bottom" secondItem="IW9-o8-Z7u" secondAttribute="bottom" id="8OD-wW-gCw"/>
+                            <constraint firstAttribute="trailing" secondItem="f5k-4L-R17" secondAttribute="trailing" id="HjS-6o-k76"/>
+                            <constraint firstItem="f5k-4L-R17" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="KaE-u9-8lk"/>
                             <constraint firstItem="x1J-wl-Lus" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="QTO-RO-dL2"/>
                             <constraint firstItem="x1J-wl-Lus" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="V9s-QL-Vj6"/>
                             <constraint firstAttribute="trailing" secondItem="x1J-wl-Lus" secondAttribute="trailing" id="XYG-xp-yMO"/>
+                            <constraint firstItem="f5k-4L-R17" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Yrq-JB-ex8"/>
+                            <constraint firstAttribute="bottom" secondItem="f5k-4L-R17" secondAttribute="bottom" id="lEy-eh-QB7"/>
                             <constraint firstAttribute="trailing" secondItem="IW9-o8-Z7u" secondAttribute="trailing" id="taz-Ba-D8X"/>
-                            <constraint firstItem="IW9-o8-Z7u" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="277" id="xIU-QO-f97"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="back" destination="Nef-CQ-JcV" id="G25-uh-SOG"/>
                         <outlet property="barCode" destination="nrI-zD-IWl" id="Oxp-nj-xTp"/>
+                        <outlet property="viewCamera" destination="f5k-4L-R17" id="z1q-hg-35X"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-543" y="-217"/>
+            <point key="canvasLocation" x="-543.08035714285711" y="-217.39130434782609"/>
         </scene>
         <!--Flutter View Controller-->
         <scene sceneID="aKu-Dt-pxN">

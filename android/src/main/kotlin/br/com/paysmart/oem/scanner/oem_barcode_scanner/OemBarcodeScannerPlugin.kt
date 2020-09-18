@@ -1,16 +1,16 @@
 package br.com.paysmart.oem.scanner.oem_barcode_scanner
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.util.Log
 import androidx.annotation.NonNull
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 
@@ -20,17 +20,21 @@ class OemBarcodeScannerPlugin
     private lateinit var mContext: Context
     private lateinit var mChannel: MethodChannel
 
-    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        mContext = flutterPluginBinding.applicationContext
-        mChannel = MethodChannel(flutterPluginBinding.getFlutterEngine().dartExecutor, "oem_barcode_scanner")
+    private fun init(ctx: Context, msgr: BinaryMessenger) {
+        this.mContext = ctx
+        this.mChannel = MethodChannel(msgr, "oem_barcode_scanner")
         mChannel.setMethodCallHandler(this)
+    }
+
+    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        init(flutterPluginBinding.applicationContext, flutterPluginBinding.getFlutterEngine().dartExecutor)
     }
 
     companion object {
         @JvmStatic
         fun registerWith(registrar: Registrar) {
-            val channel = MethodChannel(registrar.messenger(), "oem_barcode_scanner")
-            channel.setMethodCallHandler(OemBarcodeScannerPlugin())
+            val plugin = OemBarcodeScannerPlugin()
+            plugin.init(registrar.activeContext(), registrar.messenger())
         }
     }
 

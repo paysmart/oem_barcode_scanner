@@ -26,20 +26,26 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IW9-o8-Z7u">
                                 <rect key="frame" x="0.0" y="277" width="896" height="137"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nrI-zD-IWl">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nrI-zD-IWl">
                                         <rect key="frame" x="234" y="43" width="428" height="51"/>
-                                        <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.16078431372549018" green="0.66666666666666663" blue="0.88235294117647056" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="428" id="Nr3-VD-wnc"/>
                                             <constraint firstAttribute="height" constant="51" id="b5w-as-NL1"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <state key="normal" title="Digitar código de barras">
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="380" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="Digitar código de barras" image="arrow.right" catalog="system">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                         </state>
+                                        <connections>
+                                            <action selector="codeBar:" destination="BYZ-38-t0r" eventType="touchUpInside" id="h0j-JR-9mh"/>
+                                        </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="nrI-zD-IWl" firstAttribute="centerX" secondItem="IW9-o8-Z7u" secondAttribute="centerX" id="AHc-Bs-BXQ"/>
                                     <constraint firstItem="nrI-zD-IWl" firstAttribute="top" secondItem="IW9-o8-Z7u" secondAttribute="top" constant="43" id="wcg-uh-c9h"/>
@@ -49,11 +55,15 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x1J-wl-Lus">
                                 <rect key="frame" x="0.0" y="0.0" width="896" height="100"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nef-CQ-JcV">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nef-CQ-JcV">
                                         <rect key="frame" x="40" y="35" width="45" height="30"/>
-                                        <state key="normal" title="&lt;"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="arrow.left" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                        </state>
                                         <connections>
-                                            <action selector="backToScreen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t6E-hd-av3"/>
+                                            <action selector="backToScreen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aIJ-kQ-yd9"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Posicione o código de barras de suas contas sob a linha vermelha e aguarde a leitura automática" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ou3-Sf-UGO">
@@ -63,7 +73,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="Ou3-Sf-UGO" firstAttribute="centerX" secondItem="x1J-wl-Lus" secondAttribute="centerX" id="8XB-oi-Esr"/>
                                     <constraint firstItem="Nef-CQ-JcV" firstAttribute="top" secondItem="x1J-wl-Lus" secondAttribute="top" constant="35" id="A1B-8r-Gln"/>
@@ -92,7 +102,7 @@
                     </view>
                     <connections>
                         <outlet property="back" destination="Nef-CQ-JcV" id="G25-uh-SOG"/>
-                        <outlet property="barCode" destination="nrI-zD-IWl" id="Oxp-nj-xTp"/>
+                        <outlet property="barCode" destination="nrI-zD-IWl" id="HtO-Oa-JdE"/>
                         <outlet property="viewCamera" destination="f5k-4L-R17" id="z1q-hg-35X"/>
                     </connections>
                 </viewController>
@@ -119,4 +129,8 @@
             <point key="canvasLocation" x="-565" y="573"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="arrow.left" catalog="system" width="128" height="98"/>
+        <image name="arrow.right" catalog="system" width="128" height="98"/>
+    </resources>
 </document>

@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     String barCode;
     try {
-      barCode = await OEMBarcodeScanner.scan('#29AAE1');
+      barCode = await OEMBarcodeScanner.scan('#29AAE2');
     } on PlatformException {
       barCode = 'Failed to get platform version.';
     }

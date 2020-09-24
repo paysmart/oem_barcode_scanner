@@ -12,7 +12,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.zxing.BarcodeFormat
 import com.google.zxing.client.android.BeepManager
+import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import kotlinx.android.synthetic.main.activity_bar_code_scanner.*
 
 
@@ -34,10 +36,11 @@ class BarCodeScannerActivity : AppCompatActivity() {
         BeepManager(this)
     }
 
+    private var mBarcode = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bar_code_scanner)
-
 
         intent?.getStringExtra("color")?.let { color ->
             changeBackgroundColor(color)
@@ -49,16 +52,24 @@ class BarCodeScannerActivity : AppCompatActivity() {
             finish()
         }
 
+        go_back_tbn.setOnClickListener {
+            finish()
+        }
+
         askCameraPermission()
 
         barcodeSurface.setStatusText("")
+
         barcodeSurface.decodeSingle { barcode ->
-            mBeeper.playBeepSound()
-            LocalBroadcastManager.getInstance(this)
-                    .sendBroadcast(Intent("barcode-read").apply {
-                        putExtra("barCode", barcode.text)
-                    })
-            finish()
+            if (barcode.text != null && barcode.text != mBarcode) {
+                mBarcode = barcode.text
+                mBeeper.playBeepSound()
+                LocalBroadcastManager.getInstance(this)
+                        .sendBroadcast(Intent("barcode-read").apply {
+                            putExtra("barCode", barcode.text)
+                        })
+                finish()
+            }
         }
 
     }

@@ -8,6 +8,7 @@ import androidx.annotation.NonNull
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.BinaryMessenger
+import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -15,15 +16,19 @@ import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 
 class OemBarcodeScannerPlugin
-    : FlutterPlugin, MethodCallHandler {
+    : FlutterPlugin, EventChannel.StreamHandler, MethodCallHandler {
 
     private lateinit var mContext: Context
     private lateinit var mChannel: MethodChannel
+    private lateinit var mEventBus: BroadcastReceiver
+    private lateinit var mEventChannel: EventChannel
 
     private fun init(ctx: Context, msgr: BinaryMessenger) {
         this.mContext = ctx
         this.mChannel = MethodChannel(msgr, "oem_barcode_scanner")
+        this.mEventChannel = EventChannel(msgr, "oem_barcode_scanner/events")
         mChannel.setMethodCallHandler(this)
+        mEventChannel.setStreamHandler(this)
     }
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
@@ -33,8 +38,9 @@ class OemBarcodeScannerPlugin
     companion object {
         @JvmStatic
         fun registerWith(registrar: Registrar) {
-            val plugin = OemBarcodeScannerPlugin()
-            plugin.init(registrar.activeContext(), registrar.messenger())
+            with(OemBarcodeScannerPlugin()) {
+                init(registrar.activeContext(), registrar.messenger())
+            }
         }
     }
 
@@ -46,26 +52,6 @@ class OemBarcodeScannerPlugin
 
 
     private fun scan(call: MethodCall, result: Result) {
-
-        val mEventBus = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                when (intent?.action) {
-                    "barcode-read" -> {
-                        result.success(intent.getStringExtra("barCode"))
-                    }
-                    "barcode-manual" -> {
-                        result.success("user_manual_input")
-                    }
-                }
-            }
-        }
-
-        LocalBroadcastManager.getInstance(mContext)
-                .registerReceiver(mEventBus, IntentFilter().apply {
-                    addAction("barcode-read")
-                    addAction("barcode-manual")
-                })
-
         call.argument<String>("color")?.let { color ->
             mContext.startActivity(Intent(mContext, BarCodeScannerActivity::class.java).apply {
                 putExtra("color", color)
@@ -77,5 +63,35 @@ class OemBarcodeScannerPlugin
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         mChannel.setMethodCallHandler(null)
+        mEventChannel.setStreamHandler(null)
     }
+
+
+    override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
+        mEventBus = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                when (intent?.action) {
+                    "barcode-read" -> {
+                        events?.success(intent.getStringExtra("barCode"))
+                    }
+                    "barcode-manual" -> {
+                        events?.success("user_manual_input")
+                    }
+                }
+            }
+        }
+
+        LocalBroadcastManager.getInstance(mContext)
+                .registerReceiver(mEventBus, IntentFilter().apply {
+                    addAction("barcode-read")
+                    addAction("barcode-manual")
+                })
+    }
+
+    override fun onCancel(arguments: Any?) {
+        LocalBroadcastManager.getInstance(mContext)
+                .unregisterReceiver(mEventBus)
+    }
+
+
 }

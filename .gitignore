@@ -5,3 +5,8 @@
 .pub/
 
 build/
+
+.idea
+android/.idea
+
+*.iml

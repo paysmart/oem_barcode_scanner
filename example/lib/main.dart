@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:oem_barcode_scanner/oem_barcode_scanner.dart';
 
@@ -16,10 +16,29 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _barCodeLine = 'Unknown';
 
+  StreamSubscription<dynamic> _eventStream;
+
+  Widget scanResult = CircularProgressIndicator();
+
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+
+    _eventStream =
+        OEMBarcodeScanner.eventChannel.receiveBroadcastStream().listen((event) {
+          if (event != 'user_manual_input') {
+            setState(() {
+              scanResult = Text(event);
+            });
+          }
+        });
+    //initPlatformState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _eventStream.cancel();
   }
 
   Future<void> initPlatformState() async {
@@ -47,8 +66,22 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: Text('Running on: $_barCodeLine'),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            scanResult,
+            SizedBox(
+              width: 100,
+            ),
+            RaisedButton(
+              child: Text('Scan it'),
+              onPressed: () {
+                OEMBarcodeScanner.scan('#fcba03');
+              },
+            )
+          ],
         ),
       ),
     );

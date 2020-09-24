@@ -14,7 +14,7 @@
             android:name=".BarCodeScannerActivity"
             android:configChanges="orientation"
             android:launchMode="singleTop"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="reverseLandscape" />
     </application>
 
 

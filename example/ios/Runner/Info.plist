@@ -9,7 +9,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>br.com.paysmart.oem.scanner.oemBarcodeScannerExample</string>
 	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
+	<string>10.0</string>
 	<key>CFBundleName</key>
 	<string>oem_barcode_scanner_example</string>
 	<key>CFBundlePackageType</key>

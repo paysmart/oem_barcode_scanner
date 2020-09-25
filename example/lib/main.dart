@@ -30,6 +30,10 @@ class _MyAppState extends State<MyApp> {
             setState(() {
               scanResult = Text(event);
             });
+          }else{
+            setState(() {
+              scanResult = Text(event);
+            });
           }
         });
     //initPlatformState();

@@ -232,6 +232,10 @@ class BarCodeScannerViewController: UIViewController {
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .landscapeLeft
     }
+    
+    override var shouldAutorotate: Bool{
+        return true
+    }
 }
 extension BarCodeScannerViewController : AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection)

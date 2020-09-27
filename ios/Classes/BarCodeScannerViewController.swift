@@ -230,11 +230,15 @@ class BarCodeScannerViewController: UIViewController {
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .landscapeLeft
+        return .landscape
     }
     
     override var shouldAutorotate: Bool{
-        return true
+        return false
+    }
+    
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation{
+        return .landscapeLeft
     }
 }
 extension BarCodeScannerViewController : AVCaptureMetadataOutputObjectsDelegate {

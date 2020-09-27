@@ -69,7 +69,7 @@ class BarCodeScannerViewController: UIViewController {
         labelText.numberOfLines = 2
         labelText.textAlignment = .center
         
-        mainView.frame = CGRect(x: 0, y: 0, width: (screenSize.height * 0.8), height: 200)
+        mainView.frame = CGRect(x: 0, y: 0, width: screenSize.height, height: screenSize.width)
         
         avCaptureSession = AVCaptureSession()
         DispatchQueue.main.async() { [self] in
@@ -112,10 +112,10 @@ class BarCodeScannerViewController: UIViewController {
             self.avPreviewLayer.videoGravity = .resizeAspectFill
             self.avPreviewLayer.layoutSublayers()
             self.avPreviewLayer.layoutIfNeeded()
-//            self.avPreviewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.landscapeRight;
             self.avCaptureSession.startRunning()
             self.view.addSubview(mainView)
-            self.mainView.layer.addSublayer(self.avPreviewLayer)
+            
+            self.view.layer.addSublayer(self.avPreviewLayer)
             self.view.bringSubviewToFront(mainView)
             self.view.bringSubviewToFront(bottomView)
             self.view.bringSubviewToFront(topView)

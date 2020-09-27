@@ -13,58 +13,28 @@ protocol ScannerBarCodeDelegate {
     func requestManualInput()
 }
 
-final class ViewControllerScreen : UIView{
-    override init(frame: CGRect = .zero){
-        super.init(frame: frame)
-        
-        let viewDigitBarCode = UIView(frame: .zero)
-        viewDigitBarCode.backgroundColor = .black
-        viewDigitBarCode.translatesAutoresizingMaskIntoConstraints = false
-        
-        addSubview(viewDigitBarCode)
-        
-        viewDigitBarCode.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
-        viewDigitBarCode.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 15).isActive = true
-        viewDigitBarCode.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        viewDigitBarCode.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 15).isActive = true
-        
-        let button = UIButton(frame: .zero)
-        button.backgroundColor = .blue
-        button.setTitle("Digitar código de barras", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        viewDigitBarCode.addSubview(button)
-        
-        backgroundColor = .darkGray
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 class BarCodeScannerViewController: UIViewController {
     
     var avCaptureSession: AVCaptureSession!
     var avPreviewLayer: AVCaptureVideoPreviewLayer!
     var color : String!
-    let screen = ViewControllerScreen()
     var delegate: ScannerBarCodeDelegate? = nil
     let viewBarCode = UIView()
     let viewDigitBarCode = UIView()
     let mainView = UIView()
     var screenSize = UIScreen.main.bounds
+    let labelText = UILabel()
 
     private lazy var bottomView : UIView! = {
         let view = UIView()
-        view.backgroundColor = UIColor.black
+        view.backgroundColor = hexStringToUIColor(hex: "#262626")
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private lazy var topView : UIView! = {
         let view = UIView()
-        view.backgroundColor = UIColor.black
+        view.backgroundColor = hexStringToUIColor(hex: "#262626")
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -75,17 +45,31 @@ class BarCodeScannerViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = hexStringToUIColor(hex: color)
         view.layer.cornerRadius = 15
-        
+        view.addTarget(self, action: #selector(requestManualInput), for: .touchUpInside)
         return view
     }()
     
+    public lazy var backButton: UIButton! = {
+        let view = UIButton(type: .custom)
+        view.setImage(UIImage(named: "arrow.png"), for: .normal)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 15
+        view.addTarget(self, action: #selector(backToScreen), for: .touchUpInside)
+        return view
+    }()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        viewBarCode.backgroundColor = .black
-        viewDigitBarCode.backgroundColor = .black
         
-        mainView.frame = CGRect(x: 0, y: 0, width: (screenSize.height * 0.8), height: 100)
+        labelText.text = "Posicione o código de barras sob \n a linha e aguarde a leitura"
+        labelText.textColor = UIColor.white
+        labelText.translatesAutoresizingMaskIntoConstraints = false
+        labelText.numberOfLines = 2
+        labelText.textAlignment = .center
+        
+        mainView.frame = CGRect(x: 0, y: 0, width: (screenSize.height * 0.8), height: 200)
         
         avCaptureSession = AVCaptureSession()
         DispatchQueue.main.async() { [self] in
@@ -128,17 +112,20 @@ class BarCodeScannerViewController: UIViewController {
             self.avPreviewLayer.videoGravity = .resizeAspectFill
             self.avPreviewLayer.layoutSublayers()
             self.avPreviewLayer.layoutIfNeeded()
-            self.view.layer.addSublayer(self.avPreviewLayer)
-            
+//            self.avPreviewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.landscapeRight;
             self.avCaptureSession.startRunning()
             self.view.addSubview(mainView)
+            self.mainView.layer.addSublayer(self.avPreviewLayer)
             self.view.bringSubviewToFront(mainView)
             self.view.bringSubviewToFront(bottomView)
             self.view.bringSubviewToFront(topView)
+            self.view.bringSubviewToFront(labelText)
             mainView.layoutIfNeeded()
             mainView.layoutSubviews()
             mainView.setNeedsUpdateConstraints()
             self.view.bringSubviewToFront(digitBarCodeButton)
+            self.view.bringSubviewToFront(backButton)
+
             setConstraintsForControls()
         }
     }
@@ -147,22 +134,35 @@ class BarCodeScannerViewController: UIViewController {
         self.view.addSubview(bottomView)
         self.view.addSubview(topView)
         self.view.addSubview(digitBarCodeButton)
+        self.view.addSubview(backButton)
+        self.view.addSubview(labelText)
         
         bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant:0).isActive = true
         bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant:0).isActive = true
         bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:0).isActive = true
-        bottomView.heightAnchor.constraint(equalToConstant: 70.0).isActive=true
+        bottomView.heightAnchor.constraint(equalToConstant: 90.0).isActive=true
+
+        topView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant:0).isActive = true
+        topView.topAnchor.constraint(equalTo: view.topAnchor, constant:0).isActive = true
+        topView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:0).isActive = true
+        topView.heightAnchor.constraint(equalToConstant: 90).isActive=true
         
-        topView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant:100).isActive = true
-        topView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant:100).isActive = true
-        topView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:100).isActive = true
-        topView.heightAnchor.constraint(equalToConstant: 70.0).isActive=true
+        digitBarCodeButton.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        digitBarCodeButton.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        digitBarCodeButton.bottomAnchor.constraint(equalTo:view.bottomAnchor,constant: -10).isActive=true
+        digitBarCodeButton.centerXAnchor.constraint(equalTo: mainView.centerXAnchor).isActive = true
         
-        digitBarCodeButton.translatesAutoresizingMaskIntoConstraints = false
-        digitBarCodeButton.widthAnchor.constraint(equalToConstant: 100.0).isActive = true
-        digitBarCodeButton.heightAnchor.constraint(equalToConstant: 70.0).isActive = true
-        digitBarCodeButton.bottomAnchor.constraint(equalTo:view.bottomAnchor,constant: 0).isActive=true
-        digitBarCodeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:100).isActive = true
+        backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant:30).isActive = true
+        backButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        backButton.topAnchor.constraint(equalTo:view.topAnchor,constant: 10).isActive=true
+        
+        labelText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant:200).isActive = true
+        labelText.widthAnchor.constraint(equalToConstant: 400).isActive = true
+        labelText.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        labelText.topAnchor.constraint(equalTo:view.topAnchor,constant: 0).isActive=true
+        labelText.centerXAnchor.constraint(equalTo: mainView.centerXAnchor).isActive = true
+        labelText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:-80).isActive = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -215,22 +215,18 @@ class BarCodeScannerViewController: UIViewController {
         return AVCaptureDevice.authorizationStatus(for: .video) == .authorized
     }
     
-    func requestManualInput() {
+    @objc func requestManualInput() {
         delegate?.requestManualInput()
         dismiss(animated: true)
     }
-
-//    @IBAction func codeBar(_ sender: UIButton) {
-//        result("user_manual_input")
-//    }
-//
-//    @IBAction func backToScreen(_ sender: Any) {
-//        if let nav = self.navigationController {
-//            nav.popViewController(animated: true)
-//        } else {
-//            self.dismiss(animated: true, completion: nil)
-//        }
-//    }
+    
+    @objc func backToScreen(){
+        dismiss(animated: true)
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .landscapeRight
+    }
 }
 extension BarCodeScannerViewController : AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection)

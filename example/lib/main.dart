@@ -82,7 +82,7 @@ class _MyAppState extends State<MyApp> {
             RaisedButton(
               child: Text('Scan it'),
               onPressed: () {
-                OEMBarcodeScanner.scan('#fcba03');
+                OEMBarcodeScanner.scan('#28B4E7');
               },
             )
           ],

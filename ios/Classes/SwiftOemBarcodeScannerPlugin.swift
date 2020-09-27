@@ -36,14 +36,7 @@ public class SwiftOemBarcodeScannerPlugin: NSObject, FlutterPlugin, FlutterStrea
         if #available(iOS 13.0, *) {
             barCodeScannerViewController.modalPresentationStyle = .fullScreen
         }
-
-//        if(barCodeScannerViewController.checkCameraAvailability()){
-//            if(barCodeScannerViewController.checkForCameraPermission()){
-//
         SwiftOemBarcodeScannerPlugin.scannerViewController.present(barCodeScannerViewController, animated: true, completion: nil)
-//
-//            }
-//        }
     }
     
     public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {

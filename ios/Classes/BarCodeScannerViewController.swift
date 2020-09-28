@@ -88,7 +88,7 @@ class BarCodeScannerViewController: UIViewController {
         avCaptureSession = AVCaptureSession()
         DispatchQueue.main.async() { [self] in
             guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
-                requestManualInput()
+                self.requestManualInput()
                 return
             }
             let avVideoInput: AVCaptureDeviceInput
@@ -96,14 +96,14 @@ class BarCodeScannerViewController: UIViewController {
             do {
                 avVideoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
             } catch {
-                requestManualInput()
+                self.requestManualInput()
                 return
             }
 
             if (self.avCaptureSession.canAddInput(avVideoInput)) {
                 self.avCaptureSession.addInput(avVideoInput)
             } else {
-                requestManualInput()
+                self.requestManualInput()
                 return
             }
 
@@ -115,7 +115,7 @@ class BarCodeScannerViewController: UIViewController {
                 metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
                 metadataOutput.metadataObjectTypes = [.interleaved2of5]
             } else {
-                requestManualInput()
+                self.requestManualInput()
                 return
             }
 
@@ -127,21 +127,21 @@ class BarCodeScannerViewController: UIViewController {
             self.avPreviewLayer.layoutSublayers()
             self.avPreviewLayer.layoutIfNeeded()
             self.avCaptureSession.startRunning()
-            self.view.addSubview(mainView)
+            self.view.addSubview(self.mainView)
             
             self.view.layer.addSublayer(self.avPreviewLayer)
-            self.view.bringSubviewToFront(mainView)
-            self.view.bringSubviewToFront(bottomView)
-            self.view.bringSubviewToFront(topView)
-            self.view.bringSubviewToFront(lineView)
-            self.view.bringSubviewToFront(labelText)
-            mainView.layoutIfNeeded()
-            mainView.layoutSubviews()
-            mainView.setNeedsUpdateConstraints()
-            self.view.bringSubviewToFront(digitBarCodeButton)
-            self.view.bringSubviewToFront(backButton)
+            self.view.bringSubviewToFront(self.mainView)
+            self.view.bringSubviewToFront(self.bottomView)
+            self.view.bringSubviewToFront(self.topView)
+            self.view.bringSubviewToFront(self.lineView)
+            self.view.bringSubviewToFront(self.labelText)
+            self.mainView.layoutIfNeeded()
+            self.mainView.layoutSubviews()
+            self.mainView.setNeedsUpdateConstraints()
+            self.view.bringSubviewToFront(self.digitBarCodeButton)
+            self.view.bringSubviewToFront(self.backButton)
 
-            setConstraintsForControls()
+            self.setConstraintsForControls()
         }
     }
     

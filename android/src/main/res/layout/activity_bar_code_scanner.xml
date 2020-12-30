@@ -53,7 +53,7 @@
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:lines="2"
-        android:text="Posicione o código de barras sob\n a linha e aguarde a leitura"
+        android:text="Posicione o código de barras/QR ELO sob\n a linha e aguarde a leitura"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/barcodeSurface"

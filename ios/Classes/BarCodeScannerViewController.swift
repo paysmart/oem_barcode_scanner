@@ -76,7 +76,7 @@ class BarCodeScannerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        labelText.text = "Posicione o código de barras sob \n a linha e aguarde a leitura"
+        labelText.text = "Posicione o código de barras/QR ELO sob \n a linha e aguarde a leitura"
         labelText.textColor = UIColor.white
         labelText.translatesAutoresizingMaskIntoConstraints = false
         labelText.numberOfLines = 2

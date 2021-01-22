@@ -28,6 +28,7 @@ class BarCodeScannerActivity : AppCompatActivity() {
     private fun changeBackgroundColor(bgColor: String) {
         val bg = ResourcesCompat.getDrawable(resources, R.drawable.btn_background, null)
         bg?.setColorFilter(Color.parseColor(bgColor), PorterDuff.Mode.SRC_ATOP)
+        barCodeInputButton.background = bg
     }
 
     private fun changeBarcodeText(text: String) {

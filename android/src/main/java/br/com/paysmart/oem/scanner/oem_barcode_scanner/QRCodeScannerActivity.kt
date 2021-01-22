@@ -14,10 +14,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.zxing.client.android.BeepManager
+import com.journeyapps.barcodescanner.ViewfinderView
 import kotlinx.android.synthetic.main.activity_bar_code_scanner.*
 
 
-class BarCodeScannerActivity : AppCompatActivity() {
+class QRCodeScannerActivity : AppCompatActivity() {
 
     private fun askCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, CAMERA) == PackageManager.PERMISSION_DENIED) {
@@ -30,7 +31,7 @@ class BarCodeScannerActivity : AppCompatActivity() {
         bg?.setColorFilter(Color.parseColor(bgColor), PorterDuff.Mode.SRC_ATOP)
     }
 
-    private fun changeBarcodeText(text: String) {
+    private fun changeQRCodeText(text: String) {
         findViewById<TextView>(R.id.textView).text = text
     }
 
@@ -38,24 +39,17 @@ class BarCodeScannerActivity : AppCompatActivity() {
         BeepManager(this)
     }
 
-    private var mBarcode = ""
+    private var mQRCode = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bar_code_scanner)
+        setContentView(R.layout.activity_qr_code_scanner)
 
         intent?.getStringExtra("color")?.let { color ->
             changeBackgroundColor(color)
         }
         intent?.getStringExtra("text")?.let { text ->
-            changeBarcodeText(text)
-        }
-
-
-        barCodeInputButton.setOnClickListener {
-            LocalBroadcastManager.getInstance(this)
-                    .sendBroadcast(Intent("barcode-manual"))
-            finish()
+            changeQRCodeText(text)
         }
 
         go_back_tbn.setOnClickListener {
@@ -63,16 +57,17 @@ class BarCodeScannerActivity : AppCompatActivity() {
         }
 
         askCameraPermission()
+        findViewById<ViewfinderView>(R.id.zxing_viewfinder_view).setLaserVisibility(false)
 
         barcodeSurface.setStatusText("")
 
-        barcodeSurface.decodeSingle { barcode ->
-            if (barcode.text != null && barcode.text != mBarcode) {
-                mBarcode = barcode.text
+        barcodeSurface.decodeSingle { qrCode ->
+            if (qrCode.text != null && qrCode.text != mQRCode) {
+                mQRCode = qrCode.text
                 mBeeper.playBeepSound()
                 LocalBroadcastManager.getInstance(this)
                         .sendBroadcast(Intent("barcode-read").apply {
-                            putExtra("barCode", barcode.text)
+                            putExtra("barCode", qrCode.text)
                         })
                 finish()
             }

@@ -15,6 +15,11 @@
             android:configChanges="orientation"
             android:launchMode="singleTop"
             android:screenOrientation="reverseLandscape" />
+        <activity
+            android:name=".QRCodeScannerActivity"
+            android:configChanges="orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
     </application>
 
 

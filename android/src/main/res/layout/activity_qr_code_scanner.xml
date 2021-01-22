@@ -9,26 +9,6 @@
     android:background="#222222"
     tools:context=".BarCodeScannerActivity">
 
-    <Button
-        android:id="@+id/barCodeInputButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="200dp"
-        android:layout_marginRight="200dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/btn_background"
-        android:text="Digitar código de barra"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeSurface" />
-
     <ImageButton
         android:id="@+id/go_back_tbn"
         android:layout_width="wrap_content"
@@ -53,7 +33,7 @@
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:lines="2"
-        android:text="Posicione o código de barras sob\n a linha e aguarde a leitura"
+        android:text="Posicione o QR Code ELO na\n marcação e aguarde a leitura"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/barcodeSurface"

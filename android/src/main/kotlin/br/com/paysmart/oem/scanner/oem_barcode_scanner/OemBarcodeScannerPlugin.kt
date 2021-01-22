@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import androidx.annotation.NonNull
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.zxing.qrcode.encoder.QRCode
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.EventChannel
@@ -45,20 +46,28 @@ class OemBarcodeScannerPlugin
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        if (call.method == "scan") {
-            scan(call, result)
+        if (call.method == "scanBarCode") {
+            scanBarCode(call, result)
+        } else if (call.method == "scanQRCode") {
+            scanQRCode(call, result)
         }
     }
 
 
-    private fun scan(call: MethodCall, result: Result) {
-        call.argument<String>("color")?.let { color ->
-            mContext.startActivity(Intent(mContext, BarCodeScannerActivity::class.java).apply {
-                putExtra("color", color)
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            })
-        }
+    private fun scanBarCode(call: MethodCall, result: Result) {
+        mContext.startActivity(Intent(mContext, BarCodeScannerActivity::class.java).apply {
+            putExtra("color", call.argument<String>("color")!!)
+            putExtra("text", call.argument<String>("text")!!)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        })
+    }
 
+    private fun scanQRCode(call: MethodCall, result: Result) {
+        mContext.startActivity(Intent(mContext, QRCodeScannerActivity::class.java).apply {
+            putExtra("color", call.argument<String>("color")!!)
+            putExtra("text", call.argument<String>("text")!!)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        })
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {

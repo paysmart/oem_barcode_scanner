@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     String barCode;
     try {
-      barCode = await OEMBarcodeScanner.scan('#29AAE2');
+      barCode = await OEMBarcodeScanner.scanBarCode('#29AAE2');
     } on PlatformException {
       barCode = 'Failed to get platform version.';
     }
@@ -80,9 +80,15 @@ class _MyAppState extends State<MyApp> {
               width: 100,
             ),
             RaisedButton(
-              child: Text('Scan it'),
+              child: Text('Scan Barcode'),
               onPressed: () {
-                OEMBarcodeScanner.scan('#28B4E7');
+                OEMBarcodeScanner.scanBarCode('#28B4E7');
+              },
+            ),
+            RaisedButton(
+              child: Text('Scan QR Code'),
+              onPressed: () {
+                OEMBarcodeScanner.scanQRCode('#28B4E7');
               },
             )
           ],

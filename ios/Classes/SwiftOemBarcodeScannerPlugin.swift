@@ -1,11 +1,12 @@
 import Flutter
 import UIKit
 
-public class SwiftOemBarcodeScannerPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, ScannerBarCodeDelegate
+public class SwiftOemBarcodeScannerPlugin: NSObject, FlutterPlugin, FlutterStreamHandler, ScannerBarCodeDelegate, ScannerQRCodeDelegate
 {
     private static var scannerViewController = UIViewController()
     static var barCodeStream:FlutterEventSink?=nil
     let barCodeScannerViewController = BarCodeScannerViewController()
+    let qrCodeScannerViewController = QRCodeScannerViewController()
     
     
   public static func register(with registrar: FlutterPluginRegistrar) {
@@ -20,12 +21,21 @@ public class SwiftOemBarcodeScannerPlugin: NSObject, FlutterPlugin, FlutterStrea
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    
-    if ("scan" == call.method) {
+
+    if ("scanBarCode" == call.method) {
         if let args = call.arguments as? [String: Any]{
             barCodeScannerViewController.color = args["color"] as? String
+            barCodeScannerViewController.text = args["text"] as? String
         }
+
         showBarCode()
+    }else if ("scanQRCode" == call.method) {
+        if let args = call.arguments as? [String: Any]{
+            qrCodeScannerViewController.color = args["color"] as? String
+            qrCodeScannerViewController.text = args["text"] as? String
+
+        }
+        showQRCode()
     }
     
   }
@@ -37,6 +47,15 @@ public class SwiftOemBarcodeScannerPlugin: NSObject, FlutterPlugin, FlutterStrea
             barCodeScannerViewController.modalPresentationStyle = .fullScreen
         }
         SwiftOemBarcodeScannerPlugin.scannerViewController.present(barCodeScannerViewController, animated: true, completion: nil)
+    }
+    
+    private func showQRCode(){
+        qrCodeScannerViewController.delegate = self
+        
+        if #available(iOS 13.0, *) {
+            qrCodeScannerViewController.modalPresentationStyle = .fullScreen
+        }
+        SwiftOemBarcodeScannerPlugin.scannerViewController.present(qrCodeScannerViewController, animated: true, completion: nil)
     }
     
     public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
@@ -54,10 +73,12 @@ public class SwiftOemBarcodeScannerPlugin: NSObject, FlutterPlugin, FlutterStrea
         SwiftOemBarcodeScannerPlugin.barCodeStream!(barCode)
     }
     
+    func userDidScanWith(qrCode: String) {
+        SwiftOemBarcodeScannerPlugin.barCodeStream!(qrCode)
+    }
+    
     func requestManualInput() {
         SwiftOemBarcodeScannerPlugin.barCodeStream!("user_manual_input")
     }
 
 }
-
-

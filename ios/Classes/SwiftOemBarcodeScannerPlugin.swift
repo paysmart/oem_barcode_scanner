@@ -33,7 +33,6 @@ public class SwiftOemBarcodeScannerPlugin: NSObject, FlutterPlugin, FlutterStrea
         if let args = call.arguments as? [String: Any]{
             qrCodeScannerViewController.color = args["color"] as? String
             qrCodeScannerViewController.text = args["text"] as? String
-            print(call.method)
 
         }
         showQRCode()

@@ -21,7 +21,6 @@ public class SwiftOemBarcodeScannerPlugin: NSObject, FlutterPlugin, FlutterStrea
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    print(call.method)
 
     if ("scanBarCode" == call.method) {
         if let args = call.arguments as? [String: Any]{
@@ -86,5 +85,4 @@ public class SwiftOemBarcodeScannerPlugin: NSObject, FlutterPlugin, FlutterStrea
     }
 
 }
-
 

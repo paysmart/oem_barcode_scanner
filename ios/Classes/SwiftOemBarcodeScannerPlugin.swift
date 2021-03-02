@@ -28,7 +28,6 @@ public class SwiftOemBarcodeScannerPlugin: NSObject, FlutterPlugin, FlutterStrea
             barCodeScannerViewController.text = args["text"] as? String
             print(call.method)
         }
-        print(call.method)
 
         showBarCode()
     }else if ("scanQRCode" == call.method) {
@@ -85,4 +84,3 @@ public class SwiftOemBarcodeScannerPlugin: NSObject, FlutterPlugin, FlutterStrea
     }
 
 }
-

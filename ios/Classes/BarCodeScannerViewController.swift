@@ -18,6 +18,7 @@ class BarCodeScannerViewController: UIViewController {
     var avCaptureSession: AVCaptureSession!
     var avPreviewLayer: AVCaptureVideoPreviewLayer!
     var color : String!
+    var text : String!
     var delegate: ScannerBarCodeDelegate? = nil
     let viewBarCode = UIView()
     let viewDigitBarCode = UIView()

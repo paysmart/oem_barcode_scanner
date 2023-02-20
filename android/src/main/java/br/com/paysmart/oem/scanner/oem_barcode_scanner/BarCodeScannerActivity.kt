@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -55,15 +56,17 @@ class BarCodeScannerActivity : AppCompatActivity() {
 
 
         barCodeInputButton.setOnClickListener {
-            AlertDialog.Builder(baseContext)
-                .setMessage("teste de chamada").show()
-//            LocalBroadcastManager.getInstance(this)
-//                    .sendBroadcast(Intent("barcode-manual"))
-//            finish()
+
+            LocalBroadcastManager.getInstance(this)
+                .sendBroadcast(Intent("barcode-manual"))
+            finish()
         }
 
         go_back_tbn.setOnClickListener {
-            finish()
+            Toast.makeText(baseContext, "Teste de toast", Toast.LENGTH_LONG)
+                .show()
+
+//            finish()
         }
 
         askCameraPermission()
@@ -75,9 +78,9 @@ class BarCodeScannerActivity : AppCompatActivity() {
                 mBarcode = barcode.text
                 mBeeper.playBeepSound()
                 LocalBroadcastManager.getInstance(this)
-                        .sendBroadcast(Intent("barcode-read").apply {
-                            putExtra("barCode", barcode.text)
-                        })
+                    .sendBroadcast(Intent("barcode-read").apply {
+                        putExtra("barCode", barcode.text)
+                    })
                 finish()
             }
         }

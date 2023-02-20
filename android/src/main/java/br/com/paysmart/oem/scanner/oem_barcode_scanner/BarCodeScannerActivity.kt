@@ -32,7 +32,7 @@ class BarCodeScannerActivity : AppCompatActivity() {
     }
 
     private fun changeBarcodeText(text: String) {
-        findViewById<TextView>(R.id.textView).text = "TEste de código de barras"//text
+        findViewById<TextView>(R.id.textView).text = text
     }
 
     private val mBeeper by lazy {
@@ -49,7 +49,8 @@ class BarCodeScannerActivity : AppCompatActivity() {
             changeBackgroundColor(color)
         }
         intent?.getStringExtra("text")?.let { text ->
-            changeBarcodeText(text)
+//            changeBarcodeText(text)
+            changeBarcodeText("Teste Android")
         }
 
 

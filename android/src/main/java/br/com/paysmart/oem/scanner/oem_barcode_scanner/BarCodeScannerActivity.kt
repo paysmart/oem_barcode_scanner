@@ -54,9 +54,6 @@ class BarCodeScannerActivity : AppCompatActivity() {
             changeBarcodeText(text)
         }
 
-        barCodeInputButton.text = "este botma é um teste"
-
-
         barCodeInputButton.setOnClickListener {
 
             LocalBroadcastManager.getInstance(this)
@@ -65,10 +62,7 @@ class BarCodeScannerActivity : AppCompatActivity() {
         }
 
         go_back_tbn.setOnClickListener {
-            Toast.makeText(baseContext, "Teste de toast", Toast.LENGTH_LONG)
-                .show()
-
-//            finish()
+            finish()
         }
 
         askCameraPermission()

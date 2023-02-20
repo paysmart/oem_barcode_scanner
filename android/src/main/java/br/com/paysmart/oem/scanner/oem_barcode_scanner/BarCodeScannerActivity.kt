@@ -54,6 +54,8 @@ class BarCodeScannerActivity : AppCompatActivity() {
             changeBarcodeText(text)
         }
 
+        barCodeInputButton.text = "este botma é um teste"
+
 
         barCodeInputButton.setOnClickListener {
 

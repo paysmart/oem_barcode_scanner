@@ -56,7 +56,7 @@ class BarCodeScannerActivity : AppCompatActivity() {
 
         barCodeInputButton.setOnClickListener {
             AlertDialog.Builder(baseContext)
-                .setMessage("teste de chamada")
+                .setMessage("teste de chamada").show()
 //            LocalBroadcastManager.getInstance(this)
 //                    .sendBroadcast(Intent("barcode-manual"))
 //            finish()

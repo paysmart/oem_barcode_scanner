@@ -49,8 +49,7 @@ class BarCodeScannerActivity : AppCompatActivity() {
             changeBackgroundColor(color)
         }
         intent?.getStringExtra("text")?.let { text ->
-//            changeBarcodeText(text)
-            changeBarcodeText("Teste Android")
+            changeBarcodeText(text)
         }
 
 

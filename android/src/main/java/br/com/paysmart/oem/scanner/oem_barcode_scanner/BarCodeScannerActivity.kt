@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -54,9 +55,11 @@ class BarCodeScannerActivity : AppCompatActivity() {
 
 
         barCodeInputButton.setOnClickListener {
-            LocalBroadcastManager.getInstance(this)
-                    .sendBroadcast(Intent("barcode-manual"))
-            finish()
+            AlertDialog.Builder(baseContext)
+                .setMessage("teste de chamada")
+//            LocalBroadcastManager.getInstance(this)
+//                    .sendBroadcast(Intent("barcode-manual"))
+//            finish()
         }
 
         go_back_tbn.setOnClickListener {

@@ -8,8 +8,6 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -54,10 +52,10 @@ class BarCodeScannerActivity : AppCompatActivity() {
             changeBarcodeText(text)
         }
 
-        barCodeInputButton.setOnClickListener {
 
+        barCodeInputButton.setOnClickListener {
             LocalBroadcastManager.getInstance(this)
-                .sendBroadcast(Intent("barcode-manual"))
+                    .sendBroadcast(Intent("barcode-manual"))
             finish()
         }
 
@@ -74,9 +72,9 @@ class BarCodeScannerActivity : AppCompatActivity() {
                 mBarcode = barcode.text
                 mBeeper.playBeepSound()
                 LocalBroadcastManager.getInstance(this)
-                    .sendBroadcast(Intent("barcode-read").apply {
-                        putExtra("barCode", barcode.text)
-                    })
+                        .sendBroadcast(Intent("barcode-read").apply {
+                            putExtra("barCode", barcode.text)
+                        })
                 finish()
             }
         }

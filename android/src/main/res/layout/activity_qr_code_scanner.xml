@@ -16,15 +16,14 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:background="@android:color/transparent"
-        android:contentDescription="Back to previous page"
+        android:contentDescription="TODO"
         android:src="@drawable/outline_arrow_back_white_24"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toStartOf="@+id/textView"
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.375"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintVertical_bias="0.375" />
 
     <TextView
         android:id="@+id/textView"

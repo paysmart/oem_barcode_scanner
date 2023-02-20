@@ -1,7 +1,6 @@
 name: oem_barcode_scanner
 description: A new flutter plugin project.
-version: 0.0.1
-author:
+version: 0.0.1+0
 homepage:
 
 environment:

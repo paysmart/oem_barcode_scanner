@@ -14,8 +14,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _barCodeLine = 'Unknown';
-
   StreamSubscription<dynamic> _eventStream;
 
   Widget scanResult = CircularProgressIndicator();
@@ -26,16 +24,16 @@ class _MyAppState extends State<MyApp> {
 
     _eventStream =
         OEMBarcodeScanner.eventChannel.receiveBroadcastStream().listen((event) {
-          if (event != 'user_manual_input') {
-            setState(() {
-              scanResult = Text(event);
-            });
-          }else{
-            setState(() {
-              scanResult = Text(event);
-            });
-          }
+      if (event != 'user_manual_input') {
+        setState(() {
+          scanResult = Text(event);
         });
+      } else {
+        setState(() {
+          scanResult = Text(event);
+        });
+      }
+    });
     //initPlatformState();
   }
 
@@ -46,21 +44,14 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initPlatformState() async {
-    String barCode;
-    try {
-      barCode = await OEMBarcodeScanner.scanBarCode('#29AAE2');
-    } on PlatformException {
-      barCode = 'Failed to get platform version.';
-    }
+    try {} on PlatformException {}
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
 
-    setState(() {
-      _barCodeLine = barCode;
-    });
+    setState(() {});
   }
 
   @override
@@ -79,13 +70,13 @@ class _MyAppState extends State<MyApp> {
             SizedBox(
               width: 100,
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Text('Scan Barcode'),
               onPressed: () {
                 OEMBarcodeScanner.scanBarCode('#28B4E7');
               },
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Text('Scan QR Code'),
               onPressed: () {
                 OEMBarcodeScanner.scanQRCode('#28B4E7');

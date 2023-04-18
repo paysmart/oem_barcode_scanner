@@ -83,8 +83,8 @@ class BarCodeScannerViewController: UIViewController {
         labelText.numberOfLines = 2
         labelText.textAlignment = .center
         
-        view.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
-        mainView.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
+        view.frame = CGRect(x: 0, y: 0, width: screenSize.height, height: screenSize.width)
+        mainView.frame = CGRect(x: 0, y: 0, width: screenSize.height, height: screenSize.width)
         
         avCaptureSession = AVCaptureSession()
         DispatchQueue.main.async() { [self] in
